@@ -630,24 +630,72 @@ a{color:inherit;text-decoration:none;}
 <!-- ══ SUPPORT ══ -->
 <div class="sec-cream" style="border-top:1px solid var(--or-line);">
   <div class="sec">
-    <div class="support-2col">
-      <div class="ph" style="aspect-ratio:4/3;">PHOTO</div>
-      <div>
-        <span class="eyebrow">SUPPORT</span>
-        <h2 class="heading">オーダーメイドの<br><strong>サポート</strong></h2>
-        <div class="rule"></div>
-        <p class="body-text">カウンセリングで体の状態を分析し、目標に合ったプログラムを設計。コンディショニング・姿勢改善も取り入れ、苦手な方でも続けられます。</p>
-        <div class="stag-wrap">
-          <span class="stag">ダイエット</span>
-          <span class="stag">運動不足解消</span>
-          <span class="stag">姿勢改善</span>
-          <span class="stag">不調改善</span>
-          <span class="stag">高齢者サポート</span>
-        </div>
+    <div style="max-width:680px;">
+      <span class="eyebrow">SUPPORT</span>
+      <h2 class="heading">オーダーメイドの<br><strong>サポート</strong></h2>
+      <div class="rule"></div>
+      <p class="body-text">カウンセリングで体の状態を分析し、目標に合ったプログラムを設計。コンディショニング・姿勢改善も取り入れ、苦手な方でも続けられます。</p>
+    </div>
+    <!-- サポートカテゴリ グリッド -->
+    <div class="support-cats">
+      <div class="scat">
+        <div class="scat-icon">🔥</div>
+        <div class="scat-name">ダイエット</div>
+        <div class="scat-desc">体脂肪を落としながら筋肉を維持。リバウンドしない体づくりをサポートします。</div>
+      </div>
+      <div class="scat">
+        <div class="scat-icon">🏃</div>
+        <div class="scat-name">運動不足解消</div>
+        <div class="scat-desc">週1回から始められます。無理なく継続できるメニューで習慣化を後押しします。</div>
+      </div>
+      <div class="scat">
+        <div class="scat-icon">🧍</div>
+        <div class="scat-name">姿勢改善</div>
+        <div class="scat-desc">歪みや猫背の原因を分析し、日常生活で使える筋肉・柔軟性を一緒に整えます。</div>
+      </div>
+      <div class="scat">
+        <div class="scat-icon">💆</div>
+        <div class="scat-name">不調改善</div>
+        <div class="scat-desc">肩こり・腰痛・膝の痛みなど、体の不調に寄り添いながら根本からケアします。</div>
+      </div>
+      <div class="scat">
+        <div class="scat-icon">🌿</div>
+        <div class="scat-name">高齢者サポート</div>
+        <div class="scat-desc">転倒予防・筋力維持・健康寿命を延ばすトレーニングを丁寧にご指導します。</div>
       </div>
     </div>
   </div>
 </div>
+<style>
+.support-cats{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:2px;
+  background:rgba(242,106,27,.15);
+  margin-top:40px;
+}
+.scat{
+  background:var(--cream);
+  padding:clamp(20px,3vw,32px) clamp(14px,2vw,22px);
+  border-top:3px solid var(--or);
+}
+.scat-icon{font-size:1.6rem;margin-bottom:10px;line-height:1;}
+.scat-name{
+  font-size:clamp(.85rem,1.8vw,.95rem);
+  font-weight:700;
+  color:var(--ink);
+  margin-bottom:8px;
+}
+.scat-desc{font-size:.78rem;color:#5a3a28;line-height:1.85;}
+@media(max-width:768px){
+  .support-cats{grid-template-columns:repeat(2,1fr);}
+  .scat:last-child{grid-column:1/-1;}
+}
+@media(max-width:400px){
+  .support-cats{grid-template-columns:1fr;}
+  .scat:last-child{grid-column:auto;}
+}
+</style>
 
 <!-- ══ REASONS ══ -->
 <div style="background:var(--base);border-top:1px solid var(--or-line);">
@@ -996,9 +1044,7 @@ window.addEventListener('scroll', () => {
 })();
 
 /* ── お問い合わせフォーム（Formspree） ── */
-// ★ Formspree の管理画面で取得したフォームIDに置き換えてください
-// 例: https://formspree.io/f/abcd1234
-const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID';
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xlgzopad';
 
 document.getElementById('contactForm').addEventListener('submit', async function (e) {
   e.preventDefault();
