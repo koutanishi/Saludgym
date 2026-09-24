@@ -73,7 +73,7 @@
       "hasMap":"https://www.google.com/maps/search/?api=1&query=%E6%9D%B1%E4%BA%AC%E9%83%BD%E5%8F%B0%E6%9D%B1%E5%8C%BA%E9%B3%A5%E8%B6%8A2%E4%B8%81%E7%9B%AE2-1",
       "sameAs":["https://lin.ee/8zQSjR1"],
       "areaServed":["台東区","浅草橋","蔵前","鳥越","東京都"],
-      "knowsAbout":["パーソナルトレーニング","筋力トレーニング","コンディショニング","ダイエット","姿勢改善","肩こり・腰痛予防","高齢者の運動サポート","食事管理","企業向け健康経営支援","ヨガ","女性特有の悩みのサポート"],
+      "knowsAbout":["パーソナルトレーニング","筋力トレーニング","コンディショニング","ダイエット","姿勢改善","肩こり・腰痛予防","高齢者の運動サポート","企業向け健康経営支援","ヨガ","整体","オンラインヨガ","女性特有の悩みのサポート"],
       "amenityFeature":[
         {"@type":"LocationFeatureSpecification","name":"完全個室","value":true},
         {"@type":"LocationFeatureSpecification","name":"プロテイン無料提供","value":true},
@@ -93,7 +93,8 @@
           {"@type":"Offer","name":"回数券5回（5 SESSIONS）","description":"有効期限なし。1回あたり8,500円","price":"42000","priceCurrency":"JPY"},
           {"@type":"Offer","name":"回数券10回（10 SESSIONS）","description":"有効期限なし。1回あたり8,000円","price":"80000","priceCurrency":"JPY"},
           {"@type":"Offer","name":"グループトレーニング（GROUP）","description":"60分・2〜3名。要事前連絡","price":"12000","priceCurrency":"JPY"},
-          {"@type":"Offer","name":"食事管理サポート","description":"プロテイン無料提供・食事メニュー作成","priceSpecification":{"@type":"UnitPriceSpecification","price":"3000","priceCurrency":"JPY","unitText":"月","valueAddedTaxIncluded":true}}
+          {"@type":"Offer","name":"企業出張サービス（ヨガ・整体）","description":"60分 24,000円〜。月1回24,000円、月2回44,000円、月4回80,000円","price":"24000","priceCurrency":"JPY"},
+          {"@type":"Offer","name":"オンラインヨガ","description":"45分 12,000円〜。月1回12,000円、月2回22,000円、月4回40,000円","price":"12000","priceCurrency":"JPY"}
         ]
       }
     },
@@ -499,16 +500,24 @@ p{text-wrap:pretty;}
   font-family:var(--disp);font-weight:700;font-size:.85rem;letter-spacing:.06em;line-height:1;
   padding:5px 12px 4px;border-radius:999px;
 }
-.nut-card{
+.addon-grid{
   margin-top:24px;
-  background:var(--esp);color:#fff;border-radius:6px;
-  padding:clamp(22px,3vw,32px) clamp(20px,3vw,36px);
-  display:flex;justify-content:space-between;align-items:center;gap:12px 20px;flex-wrap:wrap;
+  display:grid;grid-template-columns:1fr 1fr;gap:16px;
 }
-.nut-card h3{font-size:1.15rem;font-weight:700;}
-.nut-card p{font-size:.9rem;color:var(--w75);}
-.nut-price{font-family:var(--disp);font-weight:800;font-size:clamp(2.2rem,4vw,3rem);color:var(--or);line-height:1;white-space:nowrap;}
-.nut-price small{font-family:var(--jp);font-weight:500;font-size:.8rem;color:var(--w75);margin-left:6px;}
+.addon-card{
+  background:var(--esp);color:#fff;border-radius:6px;
+  padding:clamp(22px,3vw,30px) clamp(20px,3vw,28px);
+  transition:translate .18s var(--ease),box-shadow .18s;
+}
+.addon-head h3{font-size:1.1rem;font-weight:700;}
+.addon-head p{font-size:.85rem;color:var(--or);font-weight:700;margin-top:4px;}
+.addon-tiers{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:2px;
+  margin-top:18px;background:rgba(255,255,255,.14);border-radius:4px;overflow:hidden;
+}
+.addon-tiers>div{background:var(--esp);padding:12px 8px;text-align:center;}
+.addon-n{display:block;font-size:.72rem;color:var(--w75);margin-bottom:4px;}
+.addon-p{display:block;font-family:var(--disp);font-weight:800;font-size:1.05rem;letter-spacing:.01em;white-space:nowrap;}
 .sec-cta{margin-top:40px;}
 
 /* ─── VOICE ─── */
@@ -691,6 +700,7 @@ p{text-wrap:pretty;}
   .pc:hover .pc-pr{translate:-8px 0;}
   .pc.feat:hover{translate:0 -3px;box-shadow:0 16px 36px rgba(242,106,27,.35);}
   .support-ph-wrap:hover .ph{transform:scale(1.04);}
+  .addon-card:hover{translate:0 -4px;box-shadow:0 16px 32px rgba(34,21,14,.28);}
   .vc:hover::before{translate:10px 0;}
   .fc:hover .fc-circle{transform:scale(1.1);box-shadow:0 0 0 10px var(--esp),0 0 0 12px var(--or);}
   .access-dd a:hover{text-decoration-thickness:5px;color:var(--or-dk);}
@@ -725,6 +735,7 @@ p{text-wrap:pretty;}
   .fc-circle{transition:transform .18s var(--ease),box-shadow .18s;}
   .fc:active .fc-circle{transform:scale(1.08);box-shadow:0 0 0 10px var(--esp),0 0 0 12px var(--or);}
   .qa-q:active{color:var(--or-dk);}
+  .addon-card:active{translate:0 -2px;box-shadow:0 10px 22px rgba(34,21,14,.24);}
   .qa-q:active .qa-icon{border-color:var(--or);}
 }
 
@@ -785,7 +796,7 @@ p{text-wrap:pretty;}
     grid-template-areas:"name price" "detail price";
     gap:6px 16px;
   }
-  .nut-card{flex-direction:column;align-items:flex-start;}
+  .addon-grid{grid-template-columns:minmax(0,1fr);}
   .voice-grid{grid-template-columns:minmax(0,1fr);gap:40px;}
   .vc:nth-child(2){margin-top:0;}
   .flow-grid{grid-template-columns:minmax(0,1fr);gap:28px;}
@@ -987,9 +998,29 @@ p{text-wrap:pretty;}
         <li class="pc"><h3 class="pc-name">10 SESSIONS</h3><p class="pc-detail">回数券10回 / 有効期限なし</p><div class="pc-pr"><p class="pc-price">¥80,000</p><p class="pc-sub">1回あたり ¥8,000</p></div></li>
         <li class="pc"><h3 class="pc-name">GROUP</h3><p class="pc-detail">グループトレーニング<br>要事前連絡</p><div class="pc-pr"><p class="pc-price">¥12,000</p><p class="pc-sub">60分 / 2〜3名</p></div></li>
       </ul>
-      <div class="nut-card">
-        <div><h3>食事管理サポート</h3><p>プロテイン無料提供 ／ 食事メニュー作成</p></div>
-        <p class="nut-price">¥3,000<small>/ 月額（税込）</small></p>
+      <div class="addon-grid">
+        <div class="addon-card">
+          <div class="addon-head">
+            <h3>企業出張サービス</h3>
+            <p>ヨガ・整体 / 60分 ¥24,000〜</p>
+          </div>
+          <div class="addon-tiers">
+            <div><span class="addon-n">月1回</span><span class="addon-p">¥24,000</span></div>
+            <div><span class="addon-n">月2回</span><span class="addon-p">¥44,000</span></div>
+            <div><span class="addon-n">月4回</span><span class="addon-p">¥80,000</span></div>
+          </div>
+        </div>
+        <div class="addon-card">
+          <div class="addon-head">
+            <h3>オンラインヨガ</h3>
+            <p>45分 ¥12,000〜</p>
+          </div>
+          <div class="addon-tiers">
+            <div><span class="addon-n">月1回</span><span class="addon-p">¥12,000</span></div>
+            <div><span class="addon-n">月2回</span><span class="addon-p">¥22,000</span></div>
+            <div><span class="addon-n">月4回</span><span class="addon-p">¥40,000</span></div>
+          </div>
+        </div>
       </div>
       <p class="sec-cta"><a href="https://lin.ee/8zQSjR1" target="_blank" rel="noopener" class="btn btn-or">LINEで体験を申し込む</a></p>
     </div>
@@ -1123,7 +1154,7 @@ p{text-wrap:pretty;}
     mark('.cc','rv-l');
     mark('.stag, .ctag','rv-s');
     mark('.support-ph-wrap, .map-box','rv-wipe');
-    mark('.rc, .ben, .tc, .vc, .fc, .qa, .corp-cta, .corp-note, .nut-card, .sec-cta, .access-info h3');
+    mark('.rc, .ben, .tc, .vc, .fc, .qa, .corp-cta, .corp-note, .addon-card, .sec-cta, .access-info h3');
     mark('.pc','rv-r');
     mark('.access-dl > div','rv-l');
     mark('.flow-grid');
