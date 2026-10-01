@@ -1,0 +1,44 @@
+# Salud Gym（サルードジム）— 浅草橋のパーソナルジム
+# 検索エンジン・AI検索のクローラーすべてに公開しています
+
+User-agent: *
+Allow: /
+
+# AI検索・AIアシスタント向けクローラー（AI Overviews / ChatGPT検索 / Perplexity / Claude などで紹介されるように許可）
+User-agent: Googlebot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+Sitemap: https://example.com/sitemap.xml
