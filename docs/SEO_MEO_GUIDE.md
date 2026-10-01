@@ -6,8 +6,8 @@
 
 ## 0. 公開URLと残りの作業
 
-- 公開URL：**https://saludgymhpv2.pages.dev/**（Cloudflare Pages。GitHubの `main` に反映すると自動で公開されます）
-- 独自ドメインを取得したら、`index.html` / `robots.txt` / `sitemap.xml` / `llms.txt` の `https://saludgymhpv2.pages.dev/` を一括置換し、Cloudflare Pages の Custom domains で設定する
+- 公開URL：**https://saludgym.pages.dev/**（Cloudflare Pages。GitHubの `main` に反映すると自動で公開されます）
+- 独自ドメインを取得したら、`index.html` / `robots.txt` / `sitemap.xml` / `llms.txt` の `https://saludgym.pages.dev/` を一括置換し、Cloudflare Pages の Custom domains で設定する
 - **営業時間・定休日**が決まったら Claude に伝えて、サイトと構造化データ（`openingHoursSpecification`）に追加する。マップ検索の「営業中」の絞り込みに出るために重要です
 
 ---
@@ -40,7 +40,7 @@ https://business.google.com/ で登録またはオーナー確認をします。
 | 追加カテゴリ | ジム／ヨガ教室／ヘルス コンサルタント など、実態に合うもの |
 | 住所 | 〒111-0054 東京都台東区鳥越2丁目2-1 Eterno べんけい101 |
 | 電話 | 090-9898-3309 |
-| ウェブサイト | https://saludgymhpv2.pages.dev/ |
+| ウェブサイト | https://saludgym.pages.dev/ |
 | 予約リンク | https://lin.ee/8zQSjR1 |
 | 営業時間 | 決まり次第、必ず入力（祝日の特別営業時間も） |
 | 説明文 | 下の文をそのまま使えます |
@@ -89,7 +89,7 @@ https://business.google.com/ で登録またはオーナー確認をします。
 
 1. **Google Search Console** にサイトを登録 → `sitemap.xml` を送信 → URL検査で「インデックス登録をリクエスト」
 2. **Bing Webmaster Tools** にも登録（ChatGPT検索などはBingの検索結果も使うため、AIO対策にもなります）
-3. 構造化データの確認：https://search.google.com/test/rich-results に https://saludgymhpv2.pages.dev/ を入れてエラーがないことを確認
+3. 構造化データの確認：https://search.google.com/test/rich-results に https://saludgym.pages.dev/ を入れてエラーがないことを確認
 
 ---
 
