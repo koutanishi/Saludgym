@@ -38,16 +38,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
 
 <script>
-/* JS有効なら演出ON。OSの「視差効果を減らす」設定では止めず、フッターのMOTIONスイッチでOFFにした場合のみ停止 */
+/* JS有効なら演出は常にON（OSの「視差効果を減らす」設定でも止めない） */
 (function(){
   var r=document.documentElement;r.classList.remove('no-js');r.classList.add('js');
-  var off=false;try{off=localStorage.getItem('salud-motion')==='off';}catch(e){}
-  r.classList.add(off?'motion-off':'motion');
-  if(!off){
-    r.classList.add('is-loading');
-    /* 安全装置：ライブラリが読み込めない時はローダーを外して通常表示 */
-    setTimeout(function(){if(!window.gsap&&r.classList.contains('is-loading')){r.classList.remove('motion','is-loading');var l=document.getElementById('loader');if(l)l.parentNode.removeChild(l);}},4000);
-  }
+  r.classList.add('motion','is-loading');
+  /* 安全装置：ライブラリが読み込めない時はローダーを外して通常表示 */
+  setTimeout(function(){if(!window.gsap&&r.classList.contains('is-loading')){r.classList.remove('motion','is-loading');var l=document.getElementById('loader');if(l)l.parentNode.removeChild(l);}},4000);
 })();
 </script>
 
@@ -498,7 +494,6 @@ p{text-wrap:pretty;}
 }
 .mq-track{display:flex;width:max-content;will-change:transform;}
 .no-gsap .mq-track{animation:mq 40s linear infinite;}
-.motion-off .mq-track{animation:none;}
 .mq-group{display:flex;flex-shrink:0;align-items:center;}
 .mq-item{
   display:flex;align-items:center;gap:clamp(18px,3vw,40px);
@@ -784,16 +779,6 @@ p{text-wrap:pretty;}
 .g-footer a{color:#fff;background:linear-gradient(var(--or),var(--or)) no-repeat left bottom / 0 1px;transition:color .25s,background-size .35s var(--ease);}
 .g-footer .copy{color:var(--w50);margin-top:8px;}
 .f-side{display:flex;flex-direction:column;align-items:flex-end;gap:14px;}
-.motion-tg{
-  display:inline-flex;align-items:center;gap:10px;
-  background:none;border:1px solid rgba(255,255,255,.25);border-radius:999px;
-  padding:8px 14px;min-height:40px;cursor:pointer;
-  font-family:var(--disp);font-weight:700;font-size:.85rem;letter-spacing:.12em;color:var(--w75);
-}
-.motion-tg i{width:30px;height:16px;border-radius:999px;background:rgba(255,255,255,.2);position:relative;transition:background-color .3s;}
-.motion-tg i::after{content:"";position:absolute;top:2px;left:2px;width:12px;height:12px;border-radius:50%;background:#fff;transition:transform .3s var(--ease);}
-.motion-tg[aria-pressed="true"] i{background:var(--or);}
-.motion-tg[aria-pressed="true"] i::after{transform:translateX(14px);}
 .to-top{font-family:var(--disp);font-weight:700;font-size:.9rem;letter-spacing:.14em;}
 
 /* ─── STICKY CTA ─── */
@@ -806,6 +791,18 @@ p{text-wrap:pretty;}
 }
 .sticky.show{opacity:1;pointer-events:auto;transform:none;}
 .sticky .btn{box-shadow:0 10px 30px rgba(34,21,14,.28);}
+
+/* ─── スマホ：REASONの横スクロール（JSで付与） ─── */
+.reason-grid.hscroll{display:flex;width:max-content;gap:14px;}
+.hscroll .rc{width:min(78vw,340px);flex-shrink:0;flex-direction:column !important;}
+.hscroll .rc:first-child{grid-row:auto;}
+.hscroll .rc .rc-ph-wrap{width:100% !important;flex:none !important;}
+.hscroll .rc .rc-ph{min-height:0 !important;height:min(42vh,380px);flex:none !important;}
+.hs-bar{position:relative;height:2px;margin-top:22px;background:var(--line);overflow:hidden;}
+.hs-bar i{position:absolute;inset:0;background:var(--or);transform-origin:left;transform:scaleX(0);}
+.hs-count{display:flex;justify-content:space-between;margin-top:10px;font-family:var(--disp);font-weight:700;font-size:.9rem;letter-spacing:.14em;color:var(--steel);}
+/* タップの波紋 */
+.rip{position:absolute;z-index:-1;border-radius:50%;background:rgba(255,255,255,.5);pointer-events:none;transform:translate(-50%,-50%) scale(0);}
 
 /* ═══ ホバー（マウス操作の端末のみ） ═══ */
 @media (hover:hover) and (pointer:fine){
@@ -840,7 +837,6 @@ p{text-wrap:pretty;}
   .qa-q:hover{color:var(--or-dk);}
   .qa-q:hover .qa-icon{border-color:var(--or);}
   .g-footer a:hover{color:var(--or);background-size:100% 1px;}
-  .motion-tg:hover{border-color:var(--or);color:#fff;}
 }
 .qa-q:focus-visible{outline-offset:-3px;}
 
@@ -917,7 +913,8 @@ p{text-wrap:pretty;}
   .ben-grid{grid-template-columns:minmax(0,1fr);}
   .ben:nth-child(odd){border-right:0;}
   .ben:nth-child(even){padding-left:0;}
-  .trainer-grid{grid-template-columns:minmax(0,1fr);}
+  .trainer-grid{grid-template-columns:minmax(0,1fr);gap:20px;align-items:start;}
+  .motion .tc{position:sticky;top:calc(var(--hd) + 16px);box-shadow:0 -10px 30px rgba(34,21,14,.08);}
   .pc{
     grid-template-columns:minmax(0,1fr) auto;
     grid-template-areas:"name price" "detail price";
@@ -957,13 +954,7 @@ p{text-wrap:pretty;}
   .hero-ttl{font-size:clamp(2.6rem,7vw,4.5rem);}
   .rail{position:static;}
 }
-/*
-  ※ OSの「視差効果を減らす／動きを減らす」設定(prefers-reduced-motion)でも
-    演出が止まらないよう、ここでは一括停止しません。
-    代わりにフッターの「MOTION」スイッチで、閲覧者が自分で演出を止められます。
-*/
-.motion-off *,.motion-off *::before,.motion-off *::after{animation:none !important;transition-duration:.01ms !important;}
-html.motion-off{scroll-behavior:auto;}
+/* ※ OSの「視差効果を減らす／動きを減らす」設定(prefers-reduced-motion)でも演出は止めない仕様 */
 @media print{
   .hd,.sticky,.map-box,.contact-form,.loader,.cursor,.mq,.hero-lines{display:none !important;}
   .hero{padding-top:24px;min-height:0;}
@@ -1075,7 +1066,7 @@ html.motion-off{scroll-behavior:auto;}
   <div class="blk-in">
     <div class="rail" aria-hidden="true"><span class="rail-n">02</span><span class="eyebrow">SUPPORT</span></div>
     <div class="support-2col">
-      <div class="support-ph-wrap" data-reveal>
+      <div class="support-ph-wrap" data-reveal="circle">
         <div class="ph support-ph plx"><img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="Salud Gymのカウンセリングとトレーニングの様子" loading="lazy" width="900" height="900"></div>
       </div>
       <div>
@@ -1327,7 +1318,6 @@ html.motion-off{scroll-behavior:auto;}
       <p class="copy">&copy; 2026 Salud Gym. All Rights Reserved.</p>
     </div>
     <div class="f-side">
-      <button type="button" class="motion-tg" id="motionToggle" aria-pressed="true">MOTION <i aria-hidden="true"></i></button>
       <a href="#top" class="to-top">BACK TO TOP ↑</a>
     </div>
   </div>
@@ -1341,8 +1331,7 @@ html.motion-off{scroll-behavior:auto;}
 /*
   モーション設計メモ
   - 演出は GSAP（ScrollTrigger / SplitText）＋ Lenis（慣性スクロール）で制御
-  - OSの「視差効果を減らす」設定(prefers-reduced-motion)は参照しない＝設定ONの端末でも同じ演出が動く
-  - 閲覧者がフッターの「MOTION」スイッチでOFFにした場合のみ演出を止める（localStorageに保存）
+  - OSの「視差効果を減らす」設定(prefers-reduced-motion)は参照しない＝設定ONの端末でも同じ演出が常に動く
   - CDNが読めない場合は演出なしの通常ページとして表示（コンテンツは常に見える）
 */
 (function(){
@@ -1352,16 +1341,6 @@ html.motion-off{scroll-behavior:auto;}
   var fine=window.matchMedia&&matchMedia('(hover:hover) and (pointer:fine)').matches;
   var loader=$('#loader');
   var killLoader=function(){if(loader&&loader.parentNode)loader.parentNode.removeChild(loader);loader=null;root.classList.remove('is-loading');};
-
-  /* ── MOTION スイッチ ── */
-  var tg=$('#motionToggle');
-  var motionOff=root.classList.contains('motion-off');
-  tg.setAttribute('aria-pressed',motionOff?'false':'true');
-  tg.setAttribute('aria-label',motionOff?'アニメーションをオンにする':'アニメーションをオフにする');
-  tg.addEventListener('click',function(){
-    try{localStorage.setItem('salud-motion',motionOff?'on':'off');}catch(e){}
-    location.reload();
-  });
 
   /* ── ヘッダー・読了プログレス・追従LINEボタン ── */
   var hd=$('#hd'),bar=$('#progress'),sc=$('#stickyCta');
@@ -1399,7 +1378,7 @@ html.motion-off{scroll-behavior:auto;}
 
   var hasGsap=window.gsap&&window.ScrollTrigger;
   if(!hasGsap){root.classList.add('no-gsap');}
-  if(motionOff||!hasGsap){root.classList.remove('motion');killLoader();initAnchors(null);return;}
+  if(!hasGsap){root.classList.remove('motion');killLoader();initAnchors(null);return;}
 
   /* ════════════════ ここから モーション ════════════════ */
   gsap.registerPlugin(ScrollTrigger);
@@ -1484,12 +1463,16 @@ html.motion-off{scroll-behavior:auto;}
     var size=function(){var r=cv.getBoundingClientRect();w=r.width;h=r.height;cv.width=w*dpr;cv.height=h*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);};
     size();window.addEventListener('resize',size);
     var hero=$('.hero');
-    if(fine){
-      hero.addEventListener('pointermove',function(e){
-        var r=hero.getBoundingClientRect();tm.x=(e.clientX-r.left)/r.width;tm.y=(e.clientY-r.top)/r.height;
-        hero.style.setProperty('--mx',(tm.x*100)+'%');hero.style.setProperty('--my',(tm.y*100)+'%');
-      });
-    }
+    /* マウス・指の位置で波がうねる（スマホは触った位置に反応） */
+    hero.addEventListener('pointermove',function(e){
+      var r=hero.getBoundingClientRect();tm.x=(e.clientX-r.left)/r.width;tm.y=(e.clientY-r.top)/r.height;
+      hero.style.setProperty('--mx',(tm.x*100)+'%');hero.style.setProperty('--my',(tm.y*100)+'%');
+    },{passive:true});
+    hero.addEventListener('pointerdown',function(e){
+      var r=hero.getBoundingClientRect();tm.x=(e.clientX-r.left)/r.width;tm.y=(e.clientY-r.top)/r.height;
+      hero.style.setProperty('--mx',(tm.x*100)+'%');hero.style.setProperty('--my',(tm.y*100)+'%');
+    },{passive:true});
+    var sp0=0;
     var intro={a:0};gsap.to(intro,{a:1,duration:2.4,delay:0.4,ease:'power2.out',paused:false});
     var draw=function(time){
       if(!active||!w)return;
@@ -1497,7 +1480,7 @@ html.motion-off{scroll-behavior:auto;}
       m.x+=(tm.x-m.x)*0.05;m.y+=(tm.y-m.y)*0.05;
       ctx.clearRect(0,0,w,h);
       for(var i=0;i<N;i++){
-        var p=i/(N-1),amp=h*(0.07+p*0.09)*(0.7+m.y*0.6),base=h*(0.42+p*0.36);
+        var p=i/(N-1),amp=h*(0.07+p*0.09)*(0.7+m.y*0.6)*(1+sp0*2.4),base=h*(0.42+p*0.36);
         var sp=0.00035*(1+p*0.8),reach=w*intro.a;
         ctx.beginPath();
         for(var x=0;x<=reach;x+=10){
@@ -1511,7 +1494,7 @@ html.motion-off{scroll-behavior:auto;}
       }
     };
     gsap.ticker.add(draw);
-    ScrollTrigger.create({trigger:'.hero',start:'top top',end:'bottom top',onToggle:function(s){active=s.isActive;}});
+    ScrollTrigger.create({trigger:'.hero',start:'top top',end:'bottom top',onToggle:function(s){active=s.isActive;},onUpdate:function(s){sp0=s.progress;}});
   })();
 
   /* ═══ MARQUEE：スクロール速度で加速・傾き ═══ */
@@ -1520,6 +1503,8 @@ html.motion-off{scroll-behavior:auto;}
     var tw=gsap.fromTo(track,{xPercent:dir>0?0:-50},{xPercent:dir>0?-50:0,duration:+m.dataset.speed||40,ease:'none',repeat:-1});
     return {tw:tw,skew:gsap.quickTo(track,'skewX',{duration:0.6,ease:'power3.out'})};
   });
+  /* 写真もスクロール速度で傾く（指で勢いよくスクロールすると分かる） */
+  var skewers=$$('.rc-ph-wrap, .support-ph-wrap, .corp-photo-wrap, .tc').map(function(el){return gsap.quickTo(el,'skewY',{duration:0.7,ease:'power3.out'});});
   var boostTL=null;
   ScrollTrigger.create({start:0,end:'max',onUpdate:function(self){
     var v=self.getVelocity(),d=self.direction||1,boost=d*(1+Math.min(Math.abs(v)/350,5));
@@ -1529,7 +1514,8 @@ html.motion-off{scroll-behavior:auto;}
       boostTL.to(q.tw,{timeScale:boost,duration:0.2,ease:'power1.out'},0).to(q.tw,{timeScale:d,duration:1.4,ease:'power2.out'},0.2);
       q.skew(gsap.utils.clamp(-10,10,v/-280));
     });
-    clearTimeout(self._t);self._t=setTimeout(function(){mqs.forEach(function(q){q.skew(0);});},120);
+    var sk=gsap.utils.clamp(-4,4,v/-700);skewers.forEach(function(f){f(sk);});
+    clearTimeout(self._t);self._t=setTimeout(function(){mqs.forEach(function(q){q.skew(0);});skewers.forEach(function(f){f(0);});},120);
   }});
   $$('.mq').forEach(function(m){gsap.from(m,{clipPath:'inset(50% 0% 50% 0%)',duration:1.2,ease:'expo.inOut',scrollTrigger:{trigger:m,start:'top 92%',once:true}});});
 
@@ -1543,6 +1529,66 @@ html.motion-off{scroll-behavior:auto;}
       scrollTrigger:{trigger:st,start:'top 82%',end:'bottom 45%',scrub:0.6}});
     gsap.from('.statement-lbl',{x:-40,opacity:0,scrollTrigger:{trigger:'.statement',start:'top 85%',once:true}});
   })();
+
+  /* ═══ 英字ラベル：文字がシャッフルして確定（スクランブル） ═══ */
+  var CH='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#%&/';
+  var scramble=function(el,delay){
+    var txt=el.textContent,len=txt.length,o={p:0};
+    gsap.to(o,{p:1,duration:Math.min(0.45+len*0.04,1.3),delay:delay||0,ease:'none',
+      onUpdate:function(){var n=Math.floor(o.p*len),out=txt.slice(0,n);for(var i=n;i<len;i++){var c=txt.charAt(i);out+=/[\s'.,—×]/.test(c)?c:CH.charAt((Math.random()*CH.length)|0);}el.textContent=out;},
+      onComplete:function(){el.textContent=txt;}});
+  };
+  $$('.eyebrow, .rail-n, .rc-k, .tc-badge, .pc-name, .fc h3, .access-dt, .statement-lbl, .pop-badge').forEach(function(el){
+    if(el.children.length)return;
+    ScrollTrigger.create({trigger:el,start:'top 92%',once:true,onEnter:function(){scramble(el,0.2);}});
+  });
+
+  /* ═══ スマホ専用の演出（画面幅で切り替え） ═══ */
+  var mm=gsap.matchMedia();
+  mm.add('(max-width:640px)',function(){
+    /* REASON：縦スクロールで横に流れるカード（ピン留め） */
+    var grid=$('.reason-grid'),sec=$('#reason');
+    if(grid&&sec){
+      grid.classList.add('hscroll');
+      var ui=document.createElement('div');ui.setAttribute('aria-hidden','true');
+      ui.innerHTML='<div class="hs-bar"><i></i></div><div class="hs-count"><span>SWIPE BY SCROLL</span><span class="hs-n">01 / 0'+grid.children.length+'</span></div>';
+      grid.parentNode.insertBefore(ui,grid.nextSibling);
+      var barI=$('.hs-bar i',ui),cnt=$('.hs-n',ui),total=grid.children.length;
+      var dist=function(){return Math.max(0,grid.scrollWidth-grid.parentNode.clientWidth);};
+      gsap.to(grid,{x:function(){return -dist();},ease:'none',scrollTrigger:{
+        trigger:sec,start:'top top',end:function(){return '+='+(dist()*1.2);},pin:true,scrub:0.6,anticipatePin:1,
+        invalidateOnRefresh:true,refreshPriority:1,
+        onUpdate:function(s){barI.style.transform='scaleX('+s.progress+')';cnt.textContent='0'+Math.min(total,Math.floor(s.progress*total)+1)+' / 0'+total;}
+      }});
+    }
+    /* TRAINERS：カードが重なりながら奥へ沈む */
+    var cards=$$('.tc');
+    cards.forEach(function(c,i){
+      if(i===cards.length-1)return;
+      gsap.to(c,{scale:0.88,filter:'brightness(0.55)',ease:'none',scrollTrigger:{trigger:cards[i+1],start:'top bottom',end:function(){return 'top '+(hd.offsetHeight+16)+'px';},scrub:true,invalidateOnRefresh:true}});
+    });
+    return function(){
+      if(grid){grid.classList.remove('hscroll');gsap.set(grid,{clearProps:'transform'});var u=grid.nextSibling;if(u&&u.querySelector&&u.querySelector('.hs-bar'))u.parentNode.removeChild(u);}
+      gsap.set(cards,{clearProps:'filter'});
+    };
+  });
+
+  /* ═══ お客様の声：読み進めるように文字が点灯 ═══ */
+  if(hasSplit){
+    $$('.vc blockquote p').forEach(function(p){
+      var sp=new SplitText(p,{type:'chars'});
+      gsap.fromTo(sp.chars,{opacity:0.14},{opacity:1,stagger:0.05,ease:'none',scrollTrigger:{trigger:p,start:'top 85%',end:'bottom 50%',scrub:0.5}});
+    });
+  }
+
+  /* ═══ ボタン：タップ／クリック位置から波紋 ═══ */
+  document.addEventListener('pointerdown',function(e){
+    var b=e.target.closest&&e.target.closest('.btn');if(!b)return;
+    var r=b.getBoundingClientRect(),d=Math.max(r.width,r.height)*2.4,rp=document.createElement('span');
+    rp.className='rip';rp.style.cssText='left:'+(e.clientX-r.left)+'px;top:'+(e.clientY-r.top)+'px;width:'+d+'px;height:'+d+'px;';
+    b.appendChild(rp);
+    gsap.fromTo(rp,{scale:0,opacity:1},{scale:1,opacity:0,duration:0.8,ease:'power2.out',onComplete:function(){rp.remove();}});
+  },{passive:true});
 
   /* ═══ 見出し・レール ═══ */
   $$('.heading').forEach(function(h){splitReveal(h);});
@@ -1561,19 +1607,22 @@ html.motion-off{scroll-behavior:auto;}
     var els=$$(sel);if(!els.length)return;
     gsap.set(els,from);
     ScrollTrigger.batch(els,{start:(opt&&opt.start)||'top 90%',once:true,onEnter:function(b){
-      gsap.to(b,ext({x:0,y:0,opacity:1,scale:1,rotateX:0,rotate:0,stagger:0.1,duration:1.2,ease:'expo.out',overwrite:true},opt&&opt.to||{}));
+      gsap.to(b,ext({x:0,y:0,opacity:1,scale:1,rotateX:0,rotateY:0,rotate:0,skewX:0,stagger:0.1,duration:1.2,ease:'expo.out',overwrite:true},opt&&opt.to||{}));
     }});
   };
-  batch('.cc',{x:-80,opacity:0});
+  /* CONCEPT：パタパタと上からめくれる */
+  batch('.cc',{rotateX:-95,opacity:0,transformPerspective:900,transformOrigin:'50% 0%'},{to:{stagger:0.16,duration:1.3}});
   batch('.stag, .ctag',{scale:0.6,opacity:0,y:20},{to:{ease:'back.out(2)',duration:0.8,stagger:0.05}});
   batch('.rc',{y:100,opacity:0,rotateX:-14,transformPerspective:1000,transformOrigin:'50% 0%'},{to:{stagger:0.14,duration:1.4}});
-  batch('.ben',{y:60,opacity:0});
+  /* 企業メリット：扉が開くように回転 */
+  batch('.ben',{rotateY:-75,opacity:0,transformPerspective:900,transformOrigin:'0% 50%'},{to:{stagger:0.12,duration:1.3}});
   batch('.tc',{y:100,opacity:0},{to:{stagger:0.16,duration:1.4}});
-  batch('.pc',{x:90,opacity:0},{to:{stagger:0.08}});
-  batch('.addon-card',{y:70,opacity:0},{to:{stagger:0.12}});
+  /* 料金：左右交互にスライド＋傾きが戻る */
+  batch('.pc',{x:function(i){return i%2?110:-110;},skewX:function(i){return i%2?-14:14;},opacity:0},{to:{stagger:0.09,duration:1.3}});
+  batch('.addon-card',{scale:0.82,y:40,opacity:0},{to:{stagger:0.12,ease:'back.out(1.6)'}});
   batch('.vc',{y:80,opacity:0},{to:{stagger:0.18,duration:1.4}});
   batch('.access-dl > div',{x:-50,opacity:0},{to:{stagger:0.07}});
-  batch('.qa',{y:40,opacity:0},{to:{stagger:0.08}});
+  batch('.qa',{x:-40,opacity:0},{to:{stagger:0.08}});
   batch('.cform > *',{x:60,opacity:0},{to:{stagger:0.07}});
   batch('.sec-cta, .corp-cta',{y:40,opacity:0});
 
@@ -1590,6 +1639,13 @@ html.motion-off{scroll-behavior:auto;}
   /* ═══ 写真：マスクで開く＋内部で視差 ═══ */
   $$('[data-reveal]').forEach(function(w){
     var img=$('img, iframe',w);
+    if(w.dataset.reveal==='circle'){
+      /* 小さな円からスクロールに合わせて広がる */
+      var st={trigger:w,start:'top 92%',end:'center 45%',scrub:0.5};
+      gsap.fromTo(w,{clipPath:'circle(14% at 50% 55%)'},{clipPath:'circle(75% at 50% 50%)',ease:'none',scrollTrigger:st});
+      if(img)gsap.fromTo(img,{scale:1.5,rotate:-8},{scale:1,rotate:0,ease:'none',scrollTrigger:st});
+      return;
+    }
     var tl=gsap.timeline({scrollTrigger:{trigger:w,start:'top 85%',once:true}});
     tl.fromTo(w,{clipPath:'inset(100% 0% 0% 0%)'},{clipPath:'inset(0% 0% 0% 0%)',duration:1.5,ease:'expo.inOut'});
     if(img&&img.tagName==='IMG')tl.from(img,{scale:1.4,duration:2,ease:'expo.out'},0.15);
