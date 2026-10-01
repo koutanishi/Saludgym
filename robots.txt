@@ -41,4 +41,4 @@ Allow: /
 User-agent: Applebot-Extended
 Allow: /
 
-Sitemap: https://example.com/sitemap.xml
+Sitemap: https://saludgymhpv2.pages.dev/sitemap.xml
